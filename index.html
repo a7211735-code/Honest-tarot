@@ -91,6 +91,8 @@ textarea:focus,button:focus-visible,input:focus-visible+span{outline:2px solid v
 .aihead{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}.aihead h3{font-size:20px}.aihead p{margin:4px 0 0;color:var(--mute);font-size:15px}
 #aiout:not(:empty){margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
 #aiout h4{font:700 17px "Noto Serif TC",serif;color:var(--gold);margin:16px 0 6px}#aiout h4:first-child{margin-top:0}#aiout p{margin:0 0 8px;max-width:44em}#aiout .wait{color:var(--mute)}
+.orig{color:var(--mute);font-size:15px}
+.combo{margin:16px 0 4px;padding:16px 18px;border-radius:12px;background:rgba(216,181,110,.1);border-left:3px solid var(--gold)}.combo h4{margin-top:0!important}.combo p{margin:0 0 8px}.combo .one{font-family:'Noto Serif TC',serif;font-size:17px;color:var(--gold);margin:12px 0 0}
 .lens{font-size:14px;color:var(--mute);border-left:2px solid var(--gold);padding-left:10px;margin:0 0 4px!important}
 .ask{margin-top:14px;padding:10px 14px;border-radius:10px;background:rgba(216,181,110,.12);color:var(--ink);font-size:15px}
 .sum .q2{color:#6b2440;font-style:normal;border-top:1px solid #e2d3bd;padding-top:10px}
@@ -342,6 +344,162 @@ const EXTRA=`關係可能有新的開始，或想用更輕鬆的方式相處；�
 可靠、有責任感，但可能不夠浪漫。|關係太平淡，停滯不前。|穩紮穩打，持續努力會有成果。|太保守，或效率低落。|在穩定裡，我可以加一點什麼新鮮的？
 溫暖務實、會照顧人的伴侶或家庭。|太忙或太操心，失去了自己。|兼顧工作和生活，理財能力好。|工作和家庭失衡，或過度操勞。|我有沒有把自己也列進照顧名單？
 穩重可靠，能給人安全感的伴侶。|太現實、太物質，或想控制。|事業穩定、財務成功，適合投資和擴張。|過度追求金錢，或固執不知變通。|除了錢，我還想從工作裡得到什麼？`.split('\n');
+const CORE=`勇敢的新開始|衝動或不敢開始
+主動和行動力|光說不做
+還沒說出口的直覺|被忽略的直覺
+豐盛和照顧|付出失衡
+穩定和界線|控制或失序
+規矩和傳統|被期待綁住
+真心的選擇|價值觀分歧
+往前衝的意志|方向失控
+溫柔的堅持|沒自信或情緒失控
+獨處沉澱|把自己封閉起來
+轉機|舊模式重演
+公平和誠實|不公平或逃避責任
+暫停和等待|沒有盡頭的等待
+結束與轉變|捨不得放手
+慢慢調和|失衡
+執著與束縛|開始掙脫
+突然的崩解|硬撐著不改變
+希望和療癒|失去信心
+不安和看不清|迷霧散去
+明亮的喜悅|被遮住的好事
+覺醒和重新決定|自責或逃避決定
+圓滿完成|只差最後一步
+新的熱情|熱度不夠
+規劃未來|不敢跨出去
+往外拓展|進度延遲
+安穩和慶祝|表面的和諧
+競爭和摩擦|內耗
+被肯定|太在意別人的眼光
+堅守立場|撐不住或防衛過度
+快速進展|延誤和失速
+撐到最後|精疲力盡
+扛太多|終於想放下
+好奇的嘗試|三分鐘熱度
+熱烈的衝勁|魯莽和不穩定
+自信的魅力|嫉妒或焦躁
+有遠見的帶領|太強勢
+心門打開|把情緒關起來
+心意相通|不同步
+朋友的支持|第三方或玩過頭
+倦怠|重新打開心
+失落|慢慢放下
+舊日的溫暖|活在過去
+太多幻想|看清現實
+轉身離開|想走又不敢走
+心願實現|得到了卻空虛
+圓滿的家|理想和現實的落差
+溫柔的心意|不敢表達
+浪漫的追求|說得多做得少
+同理和溫柔|被情緒淹沒
+情緒成熟|壓抑情緒
+清楚的真相|思緒混亂
+逃避選擇|壓抑的情緒爆發
+心痛|正在癒合的傷
+需要休息|停滯或過勞
+不光彩的爭執|想要和解
+離開困境|放不下過去
+隱瞞|真相被揭開
+自我設限|開始掙脫
+焦慮失眠|焦慮慢慢減輕
+谷底|從谷底爬起
+觀察和試探|說話太衝
+急著解決|口不擇言
+清醒的界線|冷漠防衛
+理性判斷|太過冷酷
+實際的新機會|錯過或延後的機會
+努力平衡|手忙腳亂
+合作和投入|投入不同步
+緊緊守住|抓太緊或開始鬆動
+困難和匱乏|困境好轉
+給予和接受|付出不對等
+耐心等成果|付出沒有回報
+專注累積|敷衍或過度完美
+自己的富足|表面的穩定
+長久的穩定|家庭或財務的糾結
+踏實的開始|不夠專心
+穩紮穩打|停滯不前
+務實的照顧|操心過度
+穩定可靠|太現實或固執`.split('\n');
+const ACTLR=`先別急著衝進一段關係或做衝動的決定，給自己一週冷靜觀察。
+注意對方說的和做的是否一致，記下他三次具體的行動再判斷。
+把心裡的疑問寫下來，挑一個溫和的時機直接問清楚。
+這週少付出一點，把省下的心力拿來照顧自己，看看關係會不會失衡。
+如果有人管太多或太冷淡，把你需要的界線具體說出來，例如回訊息的頻率、見面的次數。
+寫下你們的關係裡，哪些是「別人覺得應該」，哪些是你們真心想要的。
+和對方聊一次彼此最在意的三件事，看看價值觀在哪裡分岔。
+先停止拉扯，約一次不爭輸贏的對話，各自說出想要的方向。
+情緒上來時先離開現場十分鐘，冷靜後再回來談。
+主動傳一則簡單的訊息，讓對方知道你還在，不必一次把話說完。
+寫下你們每次卡住的固定劇本，下次試著換一句話開場。
+把你覺得不公平的地方具體列出來，用「我覺得」開頭跟對方說。
+給等待設一個期限，例如一個月；到期還沒有改變，就認真考慮放手。
+承認這種相處方式已經走到盡頭，先停止反覆聯絡或翻看舊訊息。
+找出你們步調最不同的地方，約定一個雙方都能接受的頻率。
+你已經看見不健康的地方了，找一位朋友說出來，不要再一個人面對。
+別再假裝沒事，挑一個安靜的時間，把最在意的那個問題攤開來談。
+先停止和過去或別人比較，每天寫下一件自己值得被愛的地方。
+浮現的真相可能不太舒服，先確認事實，再決定怎麼回應。
+別讓小誤會擴大，直接說出你的感受和期待。
+停止反覆自責，寫下這段關係教會你的一件事，再決定下一步。
+找出你們之間還沒說完的那件事，好好說完，關係才能真正往前或結束。
+熱度退了也沒關係，先分辨自己是真的不喜歡了，還是只是累了。
+把你對未來的想像說出來，問問對方的版本，不要各自猜。
+對方回應慢的時候，先別急著下結論，問一次他的狀況和打算。
+把你在關係裡不安的地方說出來，讓對方有機會讓你安心。
+吵到很累時先約好冷靜期，各自寫下真正在意的一件事再談。
+別只看對方有沒有在別人面前肯定你，也想想你欣賞他什麼。
+放下一點防衛，試著說一次「其實我有點怕」。
+訊息斷斷續續時不用狂傳，直接約一次見面或通話。
+你不必一直備戰，找一件小事，試著重新信任對方。
+列出你在這段關係裡扛的事，挑一件請對方一起分擔。
+如果對方只是三分鐘熱度，觀察他兩週內的行動再決定要不要投入。
+承諾不穩定的人，先看他做到了什麼，再決定要不要繼續投入。
+嫉妒冒出來時，先說出自己的不安，而不是去檢查對方。
+試著先聽完對方的意見，再說出你的決定。
+先承認你心裡的感覺，哪怕只是寫在日記裡。
+主動釐清一次誤會，問對方：「你那時候是怎麼想的？」
+如果有第三人或流言讓你不安，直接和對方確認，不要只聽傳聞。
+抬頭看看身邊，是誰一直對你好，給他一個回應。
+你已經開始走出來了，把一件和對方有關的東西收起來，就算一小步。
+停止拿現在的人和過去比較，寫下對方現在的三個優點。
+把對方實際做過的事，和你想像中的他並排寫下，看看差多少。
+決定之前問問自己：是真的想離開，還是其實想被挽留？
+問自己在這段關係裡真正想要的是什麼，而不只是表面的滿足。
+家人或現實讓你們卡住時，先兩個人達成共識，再一起面對。
+用一張小紙條或一則訊息，誠實說出你的感受。
+甜言蜜語聽聽就好，看他下次有沒有真的做到。
+你不需要接住對方所有的情緒，可以說一句「我也需要休息一下」。
+找一個安全的時機，把壓著的感受說出來，不要一直假裝沒事。
+把想說的話先寫下來，刪掉會傷人的字，再說出口。
+不再假裝沒事，給自己一個期限，做出那個選擇。
+傷口還在癒合，先別急著原諒或回頭，好好照顧自己。
+冷戰夠久了，主動傳一句「我們找時間好好談」。
+先停止爭輸贏，說一句「我不想再吵了，我想好好談」。
+別回頭看太久，刪掉一個會讓你一直想起他的東西。
+如果有隱瞞就選擇坦白；如果懷疑對方，就直接問清楚。
+寫下你覺得離不開的理由，看看有幾個其實是可以改變的。
+半夜想太多時，先寫下來，等白天再決定要不要說。
+最痛的已經過去了，今天只要好好吃飯、好好睡覺。
+停止試探和猜測，直接說出你想知道的事。
+說錯話了就道歉，具體說出哪一句不應該。
+說出界線的時候，也說出你的在乎，例如「我在乎你，所以想講清楚」。
+這次先不講道理，問問對方：「你現在的感受是什麼？」
+關係需要實際的投入，安排一次固定的約會或相處時間。
+再忙也排出一段不看手機、只陪對方的時間。
+談談你們各自願意為這段關係投入多少，找出落差在哪。
+試著放鬆一點掌控，給對方一些自己的空間。
+困難正在過去，讓對方知道你需要什麼樣的支持。
+檢查你們之間是不是有一方一直在付出，談一次怎麼平衡。
+投入很久卻沒有回應，給自己一個期限重新評估。
+把日常小事做好：準時、記得、回應，比大驚喜更有用。
+先把自己的生活過好，不要為了一段關係失去自己。
+家人或金錢問題影響到感情時，兩個人先坐下來，列出彼此的底線。
+別只是想，主動約對方做一件具體的事。
+關係太平淡的話，安排一個小小的新體驗，例如一起去沒去過的地方。
+這週先照顧好自己，再去照顧對方。
+別只用物質表達愛，說一句真心話也很重要。`.split('\n');
 const ACTR=`做重大決定前先停二十四小時，寫下最壞情況和你能承受的範圍。
 把你說了很久還沒做的事列出來，今天挑一件做完，或乾脆劃掉。
 把那個「隱約覺得不對」的地方寫下來，找當事人問清楚。
@@ -503,7 +661,7 @@ const SUITNAME={wands:'權杖',cups:'聖杯',swords:'寶劍',pentacles:'錢幣'}
 const ROMAN=['0','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI'];
 const CARDS=RAW.trim().split('\n').map((l,i)=>{
   const f=l.split('|');const heavy=f[0][0]==='!';const name=heavy?f[0].slice(1):f[0];
-  const x=EXTRA[i].split('|');const c={i,name,en:f[1],kw:f[2],up:f[3],upL:f[4],rv:f[5],rvL:f[6],heavy,lv:x[0],lvR:x[1],wk:x[2],wkR:x[3],ask:x[4]};const y=ACT[i].split('|');c.doG=y[0];c.doL=y[1];c.doW=y[2];c.doR=ACTR[i];
+  const x=EXTRA[i].split('|');const c={i,name,en:f[1],kw:f[2],up:f[3],upL:f[4],rv:f[5],rvL:f[6],heavy,lv:x[0],lvR:x[1],wk:x[2],wkR:x[3],ask:x[4]};const y=ACT[i].split('|');c.doG=y[0];c.doL=y[1];c.doW=y[2];c.doR=ACTR[i];c.doLR=ACTLR[i];const z=CORE[i].split('|');c.core=z[0];c.coreR=z[1];
   if(i>=22){c.suit=SUITS[Math.floor((i-22)/14)];c.rank=(i-22)%14+1}
   return c;
 });
@@ -770,7 +928,7 @@ function status(){
   $('status').textContent=p<n?`憑直覺從下方牌堆選 ${n} 張（已選 ${p}）`:'翻牌中……';
 }
 function reset(anim){
-  st.deck=shuffleDeck();st.picks=[];st.busy=false;if(aiCtl)aiCtl.abort();aiCtl=null;aiText='';$('aiout').textContent='';$('askai').disabled=false;$('askai').textContent='開始細讀';
+  st.deck=shuffleDeck();st.picks=[];st.busy=false;st.seed=(Math.random()*2147483647)|0;if(aiCtl)aiCtl.abort();aiCtl=null;aiText='';$('aiout').textContent='';$('askai').disabled=false;$('askai').textContent='開始細讀';
   renderSpreads();renderTopics();renderSlots();renderFan();status();
   $('reading').classList.remove('on');
   $('fan').scrollLeft=Math.max(0,($('fan').scrollWidth-$('fan').clientWidth)/2);
@@ -795,125 +953,214 @@ function reveal(k){
   setTimeout(()=>reveal(k+1),matchMedia('(prefers-reduced-motion:reduce)').matches?80:620);
 }
 
+// ===== 解讀引擎：依問題、牌組合、隨機措辭產生 =====
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const pk=(R,a)=>a[Math.floor(R()*a.length)];
 const LENS={'給你的指引':'這張牌是此刻最想對你說的話。','過去':'已經發生、到現在仍在影響你的事。','現在':'你此刻真正身處的狀態。','未來':'照目前的方向走下去，最可能的發展。它不是定局，現在的選擇會改變它。','現況':'事情目前真實的樣子。','阻礙':'卡住你的地方。就算是張好牌，落在這裡也代表「太多了」或「被忽略了」。','建議':'你可以採取的態度或行動。','你':'你在這段關係裡的狀態和心情。','對方':'對方目前的狀態。這是牌面的映照，不是讀心，請當成參考。','關係現況':'你們之間此刻的樣子。','挑戰':'這段關係需要一起面對的課題。'};
 const NUM={1:'開始與種子',2:'選擇與平衡',3:'成長與表達',4:'穩定與停駐',5:'變動與摩擦',6:'和諧與修復',7:'考驗與評估',8:'推進與力量',9:'接近完成',10:'結束與新的循環'};
-const SUITM={wands:'行動、熱情和工作上的推進',cups:'感情、關係和內心的感受',swords:'想法、溝通，以及需要面對的衝突或真相',pentacles:'金錢、身體和現實生活的安排'};
+const SUITM={
+  all:{wands:'行動、熱情和往前推進的力量',cups:'感受、關係和內心的需要',swords:'想法、溝通，以及需要面對的真相',pentacles:'金錢、身體和現實生活的安排'},
+  love:{wands:'熱情、主動和彼此的吸引力',cups:'感受和彼此的心意',swords:'溝通、想法，還有可能的爭執或誤會',pentacles:'時間、距離、金錢和生活安排這些現實面'},
+  work:{wands:'行動力和企圖心',cups:'對工作的熱情和人際關係',swords:'決策、溝通和需要面對的問題',pentacles:'收入、資源和實際的成果'}};
+const SUIT_IN={
+  love:{wands:['權杖牌在感情裡，說的是熱情和主動。','這是一張權杖，放在感情裡看的是「誰在主動、熱度還在不在」。'],
+        cups:['聖杯牌直接說的就是心意和感受。','聖杯在感情問題裡最貼近核心：你們心裡真正的感覺。'],
+        swords:['寶劍牌出現在感情裡，多半和溝通、想法或誤會有關。','放在感情裡，寶劍說的是「話怎麼說、心裡怎麼想」。'],
+        pentacles:['錢幣牌出現在感情問題裡，說的通常是現實面：時間、距離、金錢或生活安排。','感情裡的錢幣牌，看的是你們有沒有把彼此放進真實的生活裡。'],
+        major:['大牌出現在感情問題裡，代表這不只是一時的情緒，而是你在關係裡正在學的一門課。','這是一張大牌，放在感情裡分量比較重，值得慢慢想。']},
+  work:{wands:['權杖牌在工作上，說的是行動力和衝勁。','放在工作與收入上，權杖看的是「你有沒有在動、方向對不對」。'],
+        cups:['聖杯牌出現在工作問題裡，說的是熱情和人際，不只是數字。','工作裡的聖杯，看的是你做這件事開不開心、和人相處順不順。'],
+        swords:['寶劍牌在工作上，和決策、溝通或壓力有關。','放在工作裡，寶劍說的是想法夠不夠清楚、話有沒有說到位。'],
+        pentacles:['錢幣牌在工作與收入上最直接，說的就是錢和實際成果。','放在收入的問題裡，錢幣是最實際的一張：看的是投入和回報。'],
+        major:['大牌出現在工作問題裡，代表這可能是職涯上比較關鍵的轉折。','這是一張大牌，放在工作上表示這件事的影響會比較長遠。']}};
+const PAIR={'cups|swords':'心和腦在打架：感受說一件事，理智說另一件。兩邊都聽一下，不要只壓住其中一個。','cups|pentacles':'感受需要被實際的行動接住，光說不夠，要做出來。','cups|wands':'熱情和感受在拉扯：一邊想往前衝，一邊還在確認心意。','pentacles|swords':'想清楚之後要落地，計畫要變成具體的時間和安排。','pentacles|wands':'想做的事很多，但要落實到時間、金錢和體力上。','swords|wands':'行動和想法互相推動，但要小心話說得太快、決定下得太衝。'};
+const PERSONA={11:'一個剛開始、還在試探的人',12:'一個主動、行動很快的人',13:'一個成熟、懂得照顧人的人',14:'一個穩定、有主見的人'};
+const SUIT_EXTRA={love:{pentacles:'在感情問題裡錢幣這麼多，常常不是不愛，而是現實的安排還沒對齊。',swords:'寶劍多，表示你們之間可能想得多、說得少，或話說得太衝。',wands:'權杖多，代表吸引力還在，但要小心熱度來得快、去得也快。',cups:'聖杯多，代表這件事的核心是感受，不是對錯。'},
+  work:{cups:'工作問題裡聖杯多，代表你在意的其實是人和感覺，不只是數字。',swords:'寶劍多，表示壓力多半來自想太多或溝通卡住。',wands:'權杖多，代表你需要的是行動，不是再多想一點。',pentacles:'錢幣多，答案在很實際的地方：時間、技能、收支。'}};
 const tx=p=>({t:p.rev?p.c.rv:p.c.up,l:p.rev?p.c.rvL:p.c.upL,lv:p.rev?p.c.lvR:p.c.lv,wk:p.rev?p.c.wkR:p.c.wk});
 const isBright=p=>BRIGHT.has(p.c.i)&&!p.rev;
 const isHard=p=>p.c.heavy&&!p.rev;
-function summary(){
-  const P=st.picks,n=P.length,out=[],pos=SPREADS[st.spread].pos;
-  const maj=P.filter(p=>p.c.i<22).length,rv=P.filter(p=>p.rev).length;
-  // 故事線
-  if(st.spread==='ppf'){
-    const [a,b,c]=P;let t=`從「${a.c.name}」走到「${b.c.name}」，接著是「${c.c.name}」。`;
-    if((isHard(a)||a.rev)&&!isHard(c)&&!c.rev)t+='整體趨勢是往上的：過去的重量正在鬆開，未來那張牌比較輕。';
-    else if(isHard(c)||c.c.heavy)t+='未來那張牌比較沉。我不想粉飾：照現在的方向走，可能會碰到困難。但「未來」是可以改的，現在那張牌就是你的施力點。';
-    else if(c.rev)t+='未來那張是逆位，代表事情可能會卡一下或延後，不代表不會發生。';
-    else t+='未來的方向大致順著現在的努力延伸下去。';
-    out.push(t);
-  }else if(st.spread==='choice'){
-    const [a,b,c]=P;out.push(`現況是「${a.c.name}」，卡住你的是「${b.c.name}${b.rev?'（逆位）':''}」。${isBright(b)?'阻礙位出現明亮的牌，常常表示問題不在外面，而是你還不敢相信、或還沒接住眼前的好事。':'把阻礙看清楚，就已經解決了一半。'}建議牌「${c.c.name}」給的具體做法是：${doOf(c,effTopic(analyze($('q').value.trim())))}`);
-  }else if(st.spread==='love'){
-    const [a,b]=P,sa=a.c.suit,sb=b.c.suit;let t=`你是「${a.c.name}」，對方是「${b.c.name}」。`;
-    if(a.rev!==b.rev)t+='一正一逆：你們現在的狀態不太同步，一個在往外、一個在往內收，容易誤會彼此的意思。';
-    else if(a.rev&&b.rev)t+='兩張都是逆位：你們可能都有點累、有點防衛。先照顧好自己的狀態，再談關係會比較順。';
-    else t+='兩張都是正位：彼此的能量是打開的，有機會好好溝通。';
-    if(sa&&sb&&sa===sb)t+=`兩張都是${SUITNAME[sa]}，你們在意的東西很接近。`;
-    out.push(t);
-  }
-  if(n===1)out.push(maj?'這次抽到大阿爾克那，表示這個問題連著你人生裡比較大的課題，值得認真看待。':`這是一張${SUITNAME[P[0].c.suit]}牌，重點落在${SUITM[P[0].c.suit]}，是日常裡具體可以處理的事情。`);
-  else if(maj/n>=.5)out.push(`${n} 張裡有 ${maj} 張大阿爾克那：這件事牽動的不只是一時的狀況，而是你人生裡比較大的課題，答案可能需要時間慢慢長出來。`);
-  if(n>1){
-    const cnt={};P.forEach(p=>{if(p.c.suit)cnt[p.c.suit]=(cnt[p.c.suit]||0)+1});
-    const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
-    if(top&&top[1]>=2)out.push(`${SUITNAME[top[0]]}出現了 ${top[1]} 張，重心在${SUITM[top[0]]}。`);
-    const ranks={};P.forEach(p=>{if(p.c.rank&&p.c.rank<=10)ranks[p.c.rank]=(ranks[p.c.rank]||0)+1});
-    Object.entries(ranks).filter(([,v])=>v>=2).forEach(([k])=>out.push(`數字 ${k} 重複出現，主題是「${NUM[k]}」。`));
-    const courts=P.filter(p=>p.c.rank>10).length;
-    if(courts)out.push(`有 ${courts} 張宮廷牌。宮廷牌常常代表真實的人，也可能是你現在需要拿出來的某種態度。`);
-    if(rv>=Math.ceil(n*.6))out.push('多數牌是逆位：能量有點卡住，或是往內收了。這不代表結局不好，而是現在用力的方向可能需要調整，或是你需要先休息。');
-    else if(rv===0&&st.rev)out.push('全部都是正位：能量相對順暢，事情的發展比較直接。');
-  }
-  const hv=P.filter(p=>p.c.heavy).map(p=>p.c.name);
-  if(hv.length)out.push(`這次出現了比較沉的牌（${hv.join('、')}）。我不會把它說成好消息，它指出的困難是真的。但沉重的牌通常是在告訴你哪裡需要處理，而不是替你宣判結果。`);
-  const br=P.filter(isBright).map(p=>p.c.name);
-  if(br.length)out.push(`牌面裡也有明亮的訊號（${br.join('、')}），你可以允許自己期待。`);
-  const last=P[n-1];
-  const kk=keyCard();return {lines:out,last:doOf(kk,effTopic(analyze($('q').value.trim()))),ask:kk.c.ask};
-}
-
 const POS=new Set([1,3,4,6,7,8,10,14,17,19,20,21,22,24,25,27,29,36,37,38,41,44,45,50,55,64,66,69,71,72,73]);
-function val(p){const i=p.c.i;if(p.c.heavy)return p.rev?.3:-2;if(POS.has(i))return p.rev?-.5:(BRIGHT.has(i)?2:1.5);return p.rev?-.7:.3}
+const REVPOS=new Set([39,42]);
+function val(p){const i=p.c.i;if(p.rev&&REVPOS.has(i))return .5;if(p.c.heavy)return p.rev?.3:-2;if(POS.has(i))return p.rev?-.5:(BRIGHT.has(i)?2:1.5);return p.rev?-.7:.3}
 function analyze(q){
-  const r={yn:false,choice:false,when:false,how:false,topic:null};if(!q)return r;
+  const r={yn:false,choice:false,when:false,how:false,topic:null,other:false};if(!q)return r;
   r.choice=/還是|哪一個|哪個|二選一|選哪/.test(q);
   r.when=/什麼時候|何時|多久|幾月|今年|明年/.test(q);
   r.how=/怎麼|如何|怎樣|該做什麼|要做什麼/.test(q);
   r.yn=!r.choice&&/會不會|能不能|可不可以|是否|要不要|該不該|有沒有|嗎/.test(q);
-  if(/感情|喜歡|曖昧|男友|女友|男朋友|女朋友|對象|復合|交往|結婚|另一半|前任|伴侶|老公|老婆|告白|戀|桃花|分手/.test(q))r.topic='love';
-  else if(/工作|職|老闆|主管|同事|面試|升遷|創業|事業|案子|客戶|離職|轉職|考試|學業|升學|錢|財|投資|收入|薪|生意|業績/.test(q))r.topic='work';
+  const W=/工作|職|老闆|主管|同事|面試|升遷|創業|事業|案子|客戶|離職|轉職|考試|學業|升學|錢|財|投資|收入|薪|生意|業績/.test(q);
+  const Lv=/感情|感覺|喜歡|心動|曖昧|男友|女友|男朋友|女朋友|對象|復合|交往|結婚|另一半|前任|伴侶|老公|老婆|告白|戀|桃花|分手|想我|愛我|在乎我|想念|在一起|單身|約會|聯絡我|(他|她|對方).{0,6}我/.test(q);
+  if(W&&!/感情|喜歡|戀|復合|前任|曖昧|對象/.test(q))r.topic='work';else if(Lv)r.topic='love';else if(W)r.topic='work';
+  r.other=r.topic==='love'&&/他|她|對方/.test(q);
   return r;
 }
 function keyCard(){const P=st.picks;return st.spread==='choice'?P[2]:P[P.length-1]}
-const doOf=(p,t)=>p.rev?p.c.doR:t==='love'?p.c.doL:t==='work'?p.c.doW:p.c.doG;
+const doOf=(p,t)=>p.rev?(t==='love'?p.c.doLR:p.c.doR):t==='love'?p.c.doL:t==='work'?p.c.doW:p.c.doG;
 const infoOf=(p,t)=>{const x=tx(p);return t==='love'?x.lv:t==='work'?x.wk:x.t.replace(/^逆位時，/,'')};
-const LEAD={'給你的指引':'給你的提醒','過去':'過去留下的影響','現在':'你現在的狀況','未來':'照這樣走下去','現況':'你現在的狀況','阻礙':'真正卡住你的','建議':'牌建議的方向','你':'你這邊','對方':'對方那邊','關係現況':'你們之間現在','挑戰':'需要一起面對的','建議 ':'建議'};
+const LEAD={'給你的指引':'給你的提醒','過去':'過去留下的影響','現在':'你現在的狀況','未來':'照這樣走下去','現況':'你現在的狀況','阻礙':'真正卡住你的','建議':'牌建議的方向','你':'你這邊','對方':'對方那邊','關係現況':'你們之間現在','挑戰':'需要一起面對的'};
 function effTopic(an){return st.topic!=='all'?st.topic:(an.topic||'all')}
-// returns {head, lines[], flow[[label,text]], steps[]}
+const qShort=q=>{const s=q.replace(/[？?！!。\s]+$/,'');return s.length>18?s.slice(0,17)+'…':s};
+const sim=(a,b)=>{const s=new Set(b);let n=0;for(const ch of a)if(s.has(ch))n++;return n/Math.max(a.length,1)};
+const OPEN={
+  none:['沒有特定問題也沒關係。有時候我們只是需要被提醒一下，現在最該照顧的是什麼。','沒寫問題也好，就當作是抽一張給今天的自己的小紙條。'],
+  money:['想讓收入多一點，背後常常不只是數字，而是想要多一點安全感、多一點選擇的空間。這個想法很實際，也值得認真對待。','錢的問題很現實，也很磨人。我們不講空話，直接看能做什麼。','想增加收入不是貪心，是想讓生活多一點餘裕。我們一起找找施力點。'],
+  ex:['放不下一個人，不代表你軟弱。想把事情看清楚，其實是在照顧自己。','會問到前任，代表那段關係在你心裡還有重量。這不丟臉，我們誠實地看看。','回頭看一段關係需要勇氣。不管結果如何，先記得：你值得被好好對待。'],
+  love:['感情最難的地方，是我們只能決定自己的那一半。你願意停下來問，已經是在好好對待這段關係，也好好對待自己。','會拿感情來問牌，通常是心裡有點不確定。這很正常，我們一起把它看清楚一點。','喜歡一個人、在意一段關係，本來就會讓人想很多。先深呼吸，我們一張一張看。','關於感情，牌不會替你決定要不要愛，但可以幫你看清楚自己現在站在哪裡。'],
+  work:['工作佔了生活很大一塊。會想問清楚，代表你很在意自己走的方向。','對工作有疑問，常常是因為你知道自己可以更好。','工作上的卡關最消耗人。先別急著怪自己，我們看看問題出在哪。'],
+  choice:['卡在兩個選項之間很累，因為選了一個，就代表要放掉另一個。先別急，我們一起看看。','兩難的時候，最怕的不是選錯，而是一直不選。我們先把兩條路看清楚。'],
+  gen:['謝謝你願意把心裡的事拿出來問。下面我會先說實話，再陪你想接下來能做什麼。','每個問題背後，都有一份在乎。先說實話，再一起想辦法。','你願意停下來問，就已經比原地打轉往前一步了。我們來看看牌怎麼說。']};
+const CARE={
+  heavy:['這段時間可能比較辛苦。記得吃好、睡飽，別把所有事都往自己身上扛。如果壓力大到影響睡眠或生活，找信任的人或專業的人聊聊，這不是軟弱，是聰明。','牌面有點沉，你的心可能也是。允許自己累，允許自己慢一點；真的撐不住的時候，記得找人說說。'],
+  work:['想多賺一點的時候，很容易把自己逼太緊。記得留一點時間休息，累垮了反而走不遠。','工作再重要，也不值得你賠上睡眠和健康。今天至少留半小時給自己。'],
+  love:['在關係裡，也別忘了你自己的需要。好好吃飯、和朋友聊聊，讓生活不只繞著一個人轉。','感情的事很容易佔滿腦袋。今天找一件跟這段關係無關、但會讓你開心的小事去做。','不管對方怎麼想，你都值得被溫柔對待，包括被你自己。'],
+  all:['不管結果如何，先照顧好自己的身體和心情，這是做其他所有事的基礎。','今天記得多喝水、早點睡。照顧好自己，判斷才會清楚。']};
+const CLOSE={
+  hi:['牌面是站在你這邊的。不用等到百分之百確定才開始，往前走就好。','這次的牌很溫暖。好事值得被相信，也值得被好好接住。','你比你以為的更準備好了。去吧。'],
+  mid:['這條路不會完全沒有阻力，但方向是對的。一步一步來，你會開始看到變化。','不是每件事都會馬上變好，但你正在往對的方向走。','慢一點沒關係，重點是別停下來。'],
+  low:['現在的局面有好有難，結果還握在你手上。不用一次想通全部，先把今天那一件做完。','答案還沒定，這其實是好消息：代表你做的每件事都算數。','有些事急不來。照顧好自己，該來的會在對的時候出現。'],
+  bad:['這次的牌不輕鬆，我不想騙你說一切都會很順利。但困難被看見，就有機會被處理。先做完今天那一件就好。','我知道這不是你想聽的答案。但你願意面對，就已經在找出路了。','難的時候，不用急著證明什麼。先讓自己站穩，再往前。']};
+
 function answerFor(q,a){
-  const P=st.picks,pos=SPREADS[st.spread].pos,k=keyCard(),t=effTopic(a),out=[];
+  const R=rng(st.seed+11),P=st.picks,pos=SPREADS[st.spread].pos,k=keyCard(),t=effTopic(a),out=[];
   const score=P.reduce((s,p)=>s+val(p),0)/P.length;
   const worst=P.slice().sort((x,y)=>val(x)-val(y))[0];
-  const domain=t==='love'?'感情上':t==='work'?'在收入和工作上':'';
-  // 1. 直接回答
-  if(!q){out.push(`你沒有寫下問題，那就把這次的牌當成給現在的你的提醒。最值得馬上做的一件事是：${doOf(k,t)}`)}
+  const domain=t==='love'?'這段感情':t==='work'?'你的工作和收入':'事情';
+  const qs=q?qShort(q):'';
+  // 開場
+  const open=pk(R,!q?OPEN.none:/收入|錢|薪|財|存款|賺|負債|債/.test(q)?OPEN.money:/前任|復合|放不下|分手/.test(q)?OPEN.ex:a.topic==='love'?OPEN.love:a.topic==='work'?OPEN.work:a.choice?OPEN.choice:OPEN.gen);
+  // 直接回答
+  if(!q){out.push(`最值得馬上做的一件事是：${doOf(k,t)}`)}
   else if(a.yn){
-    if(score>=.8)out.push(`直接說：牌面偏向「是」，而且訊號算清楚。`);
-    else if(score>=.2)out.push(`直接說：偏向「是」，但有條件。條件就是下面那幾個步驟，做到了，機會會大很多。`);
-    else if(score>-.4)out.push(`直接說：牌沒有給出明確的是或否。結果還沒定，關鍵在你接下來怎麼做。`);
-    else out.push(`直接說：牌面偏向「不」，至少是「不是現在、也不是用現在的方式」。這不是叫你放棄，而是要先處理「${worst.c.name}」點出的問題。`);
+    if(score>=.8)out.push(pk(R,[`關於「${qs}」，直接說：牌面偏向「是」，而且訊號算清楚。`,'坦白講，這次的牌是傾向「會」的。']));
+    else if(score>=.2)out.push(pk(R,['直接說：偏向「是」，但有條件。條件就是下面那幾個步驟，做到了，機會會大很多。',`關於「${qs}」：有機會，但不是坐著等就會來，要看你接下來怎麼做。`]));
+    else if(score>-.4)out.push(pk(R,['直接說：牌沒有給出明確的是或否，結果還沒定，關鍵在你接下來怎麼做。',`關於「${qs}」，這次的牌沒有站在任何一邊，代表答案還在你手上。`]));
+    else out.push(pk(R,['直接說：牌面偏向「不」，至少是「不是現在、也不是用現在的方式」。','我想誠實一點：這次的牌比較偏向「否」，或至少時機還不對。'])+`這不是叫你放棄，而是要先處理「${worst.c.name}${worst.rev?'・逆位':''}」點出的問題：${infoOf(worst,t)}`);
+    if(a.other)out.push(pk(R,['也想提醒你：牌只能映照，不能讀心。對方真正的想法，還是要從他的行動和你們的對話裡確認。','牌可以幫你看清楚自己的位置，但對方的心，最終還是要聽他親口說、看他怎麼做。']));
   }else if(a.choice){
     out.push(`牌不會替你選，但這次的牌整體${score>=.2?'偏順，代表你心裡其實已經有傾向，可以相信它':score>-.4?'有好有難，兩條路都有代價要付':'偏沉，無論選哪邊，現在的狀態都需要先被照顧'}。想看得更清楚，可以把兩個選項分開，各抽一次比較。`);
   }else if(a.when){
     const fast=P.some(p=>p.c.suit==='wands'||p.c.i===29||p.c.i===10),slow=P.filter(p=>p.c.suit==='pentacles'||p.c.i===12||p.c.i===9).length;
     out.push(`老實說，塔羅不擅長報日期，我不想亂給你一個時間。${fast&&!slow?'但牌面的節奏偏快，事情有在動，可能比你想的早。':slow?'牌面的節奏偏慢，這件事需要時間累積，急不來。':'比起等時間，你先做了什麼更重要。'}`);
   }else{
-    out.push(`最直接的答案：${doOf(k,t)}`);
-    out.push(score>=.2?`整體牌面是支持你的，照這個方向做，${domain||'事情'}會慢慢有起色。`:`但老實說，過程不會太輕鬆，最需要先處理的是「${worst.c.name}${worst.rev?'・逆位':''}」點出的問題：${infoOf(worst,t)}`);
+    out.push(pk(R,['最直接的答案：','先說結論：','如果只能給你一個方向：','牌最想讓你做的是：'])+doOf(k,t));
+    out.push(score>=.2?pk(R,[`整體牌面是支持你的，照這個方向做，${domain}會慢慢有起色。`,`牌面大致站在你這邊，${domain}有機會往好的方向走。`])
+      :val(worst)>=0?`牌面不算特別順，但也沒有真正難的牌。需要多留意的是「${worst.c.name}${worst.rev?'・逆位':''}」：${infoOf(worst,t)}`:pk(R,['但老實說，過程不會太輕鬆，','我也想誠實一點：','不過，有一件事得先面對：'])+`最需要先處理的是「${worst.c.name}${worst.rev?'・逆位':''}」點出的問題：${infoOf(worst,t)}`);
   }
-  // 2. 依位置說清楚
   const flow=P.map((p,i)=>[LEAD[pos[i]]||pos[i],`${p.c.name}${p.rev?'・逆位':''}`,infoOf(p,t)]);
-  // 3. 具體步驟：建議牌 → 阻礙/最難的牌 → 其他
   const order=[k,worst,...P].filter((p,i,arr)=>arr.indexOf(p)===i);
-  // 開場：先接住提問的人
-  let open;
-  if(!q)open='沒有特定問題也沒關係。有時候我們只是需要被提醒一下，現在最該照顧的是什麼。';
-  else if(/收入|錢|薪|財|存款|賺|負債|債/.test(q))open='想讓收入多一點，背後常常不只是數字，而是想要多一點安全感、多一點選擇的空間。這個想法很實際，也值得認真對待。';
-  else if(/前任|復合|放不下|分手/.test(q))open='放不下一個人，不代表你軟弱。想把事情看清楚，其實是在照顧自己。';
-  else if(a.topic==='love')open='感情最難的地方，是我們只能決定自己的那一半。你願意停下來問，已經是在好好對待這段關係，也好好對待自己。';
-  else if(a.topic==='work')open='工作佔了生活很大一塊。會想問清楚，代表你很在意自己走的方向，這份在意本身就很珍貴。';
-  else if(a.choice)open='卡在兩個選項之間很累，因為選了一個，就代表要放掉另一個。先別急，我們一起看看。';
-  else open='謝謝你願意把心裡的事拿出來問。下面我會先說實話，再陪你想接下來能做什麼。';
-  // 依時間分的步驟：今天（最小）→ 這週（處理卡點）→ 這個月（建議方向）
   const others=order.filter(p=>p!==k&&p!==worst);
-  const steps=[['今天','花五分鐘，誠實回答這個問題：'+worst.c.ask+'寫下來就好，不用給別人看。']];
+  const ask=worst.c.ask;
+  const steps=[['今天',pk(R,[`花五分鐘，誠實回答這個問題：${ask}寫下來就好，不用給別人看。`,`今晚睡前想一想：${ask}答案不用完美，誠實就好。`,`拿一張紙，寫下你對這句話的回答：${ask}`])]];
   if(worst!==k)steps.push(['這週',doOf(worst,t)]);
   steps.push([worst!==k?'這個月':'這週',doOf(k,t)]);
   others.slice(0,2).forEach(p=>steps.push(['也可以試試',doOf(p,t)]));
-  // 照顧自己
-  const heavy=P.some(p=>p.c.heavy);
-  const care=heavy?'這段時間可能比較辛苦。記得吃好、睡飽，別把所有事都往自己身上扛。如果壓力大到影響睡眠或生活，找信任的人或專業的人聊聊，這不是軟弱，是聰明。'
-    :t==='work'?'想多賺一點的時候，很容易把自己逼太緊。記得留一點時間休息，累垮了，反而走不遠。'
-    :t==='love'?'在關係裡，也別忘了你自己的需要。好好吃飯、和朋友聊聊，讓自己的生活不只有這一個人。'
-    :'不管結果如何，先照顧好自己的身體和心情，這是做其他所有事的基礎。';
-  // 最後想對你說
-  const close=score>=.8?'牌面是站在你這邊的。不用等到百分之百確定才開始，往前走就好，你比你以為的更準備好了。'
-    :score>=.2?'這條路不會完全沒有阻力，但方向是對的。一步一步來，你會開始看到變化。'
-    :score>-.4?'現在的局面有好有難，結果還握在你手上。不用一次想通全部，先把今天那一件做完。'
-    :'這次的牌不輕鬆，我不想騙你說一切都會很順利。但困難被看見，就有機會被處理。你不需要一次解決全部，先做完今天那一件就好。你已經在找出路了。';
+  const care=pk(R,P.some(p=>p.c.heavy)?CARE.heavy:CARE[t]||CARE.all);
+  const close=pk(R,score>=.8?CLOSE.hi:score>=.2?CLOSE.mid:score>-.4?CLOSE.low:CLOSE.bad);
   return {head:q?'針對你的問題':'給此刻的你',open,lines:out,flow,steps,care,close,t};
 }
+
+function summary(){
+  const R=rng(st.seed+23),q=$('q').value.trim(),an=analyze(q),t=effTopic(an);
+  const P=st.picks,n=P.length,out=[],pos=SPREADS[st.spread].pos;
+  const maj=P.filter(p=>p.c.i<22).length,rv=P.filter(p=>p.rev).length,k=keyCard();
+  if(st.spread==='ppf'){
+    const [a,b,c]=P;let s=pk(R,[`從「${a.c.name}」走到「${b.c.name}」，接著是「${c.c.name}」。`,`這三張牌像一條路：${a.c.name} → ${b.c.name} → ${c.c.name}。`]);
+    if((isHard(a)||a.rev)&&!isHard(c)&&!c.rev)s+='趨勢是往上的：過去的重量正在鬆開，未來那張牌比較輕。';
+    else if(c.c.heavy)s+='未來那張牌比較沉。我不想粉飾：照現在的方向走，可能會碰到困難。但「未來」是可以改的，「現在」那張牌就是你的施力點。';
+    else if(c.rev)s+='未來那張是逆位，代表事情可能會卡一下或延後，不代表不會發生。';
+    else s+='未來的方向大致順著現在的努力延伸下去。';
+    out.push(s);
+  }else if(st.spread==='choice'){
+    const [a,b,c]=P;out.push(`你現在在「${a.c.name}${a.rev?'・逆位':''}」，卡住你的是「${b.c.name}${b.rev?'・逆位':''}」。${isBright(b)?'阻礙位出現明亮的牌，常常表示問題不在外面，而是你還不敢相信、或還沒接住眼前的好事。':pk(R,['把阻礙看清楚，就已經解決了一半。','卡點被說出來，就比較不可怕了。'])}「${c.c.name}」給的具體做法是：${doOf(c,t)}`);
+  }else if(st.spread==='love'){
+    const [a,b]=P,sa=a.c.suit,sb=b.c.suit;let s=`你是「${a.c.name}」，對方是「${b.c.name}」。`;
+    if(a.rev!==b.rev)s+='一正一逆：你們現在的狀態不太同步，一個在往外、一個在往內收，容易誤會彼此的意思。';
+    else if(a.rev&&b.rev)s+='兩張都是逆位：你們可能都有點累、有點防衛。先照顧好自己的狀態，再談關係會比較順。';
+    else s+='兩張都是正位：彼此的心是打開的，有機會好好溝通。';
+    if(sa&&sb&&sa===sb)s+=`兩張都是${SUITNAME[sa]}，你們在意的東西很接近。`;
+    out.push(s);
+  }
+  if(n>1){
+    const f=P[0];
+    if(f.c.suit&&k.c.suit&&f!==k){const key=[f.c.suit,k.c.suit].sort().join('|');out.push(f.c.suit===k.c.suit?`第一張和最後一張都是${SUITNAME[f.c.suit]}，這件事的核心很集中，不用分心在別的地方。`:PAIR[key])}
+    else if(f.c.suit&&k.c.i<22)out.push(`從${SUITNAME[f.c.suit]}這樣的日常牌，走到「${k.c.name}」這張大牌，代表這件事會帶你面對一個比較大的課題。`);
+  }
+  if(n===1)out.push(maj?'這次抽到大阿爾克那，表示這個問題連著你人生裡比較大的課題，值得認真看待。':`這是一張${SUITNAME[P[0].c.suit]}牌，重點落在${SUITM[t==='all'?'all':t][P[0].c.suit]}，是日常裡具體可以處理的事。`);
+  else if(maj/n>=.5)out.push(pk(R,[`${n} 張裡有 ${maj} 張大阿爾克那：這件事牽動的不只是一時的狀況，答案可能需要時間慢慢長出來。`,`大牌佔了一半以上，這不是小事，值得你給自己多一點時間想。`]));
+  if(n>1){
+    const cnt={};P.forEach(p=>{if(p.c.suit)cnt[p.c.suit]=(cnt[p.c.suit]||0)+1});
+    const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+    if(top&&top[1]>=2){const m=SUITM[t==='all'?'all':t][top[0]];out.push(pk(R,[`${SUITNAME[top[0]]}出現了 ${top[1]} 張，這次的重心在${m}。`,`這次有 ${top[1]} 張${SUITNAME[top[0]]}，說明${m}是這件事的關鍵。`])+((SUIT_EXTRA[t]||{})[top[0]]||''))}
+    const ranks={};P.forEach(p=>{if(p.c.rank&&p.c.rank<=10)ranks[p.c.rank]=(ranks[p.c.rank]||0)+1});
+    Object.entries(ranks).filter(([,v])=>v>=2).forEach(([r])=>out.push(`數字 ${r} 重複出現，主題是「${NUM[r]}」。`));
+    const ct=P.map((p,i)=>[p,pos[i]]).filter(([p])=>p.c.rank>10);
+    if(ct.length){const [p,ps]=ct[0];out.push(t==='love'?`「${p.c.name}」出現在「${ps}」，可能是在描述${PERSONA[p.c.rank]}，可能是你，也可能是對方。`:t==='work'?`「${p.c.name}」出現在「${ps}」，可能代表職場上${PERSONA[p.c.rank]}，例如主管、同事或客戶，也可能是你需要拿出來的態度。`:`有宮廷牌「${p.c.name}」，它常常代表真實的人，像是${PERSONA[p.c.rank]}，也可能是你現在需要的態度。`)}
+    if(rv>=Math.ceil(n*.6))out.push(pk(R,t==='love'?['多數牌是逆位：在這段感情裡，很多話可能還沒說出口，或彼此都在防衛。','逆位偏多，像是兩個人都把心收起來了一點。先讓自己放鬆，再談下一步。']:t==='work'?['多數牌是逆位：工作或收入上的阻力是真的，但通常是方法要換，不是你不夠好。','逆位偏多，表示事情卡在某個環節。找出那個環節，比更努力更重要。']:['多數牌是逆位：能量有點卡住，或是往內收了。這不代表結局不好，而是用力的方向可能需要調整。','逆位的牌偏多，代表很多事還在醞釀或被壓著。先別逼自己馬上有答案。']));
+    else if(rv===0&&st.rev)out.push('全部都是正位：能量相對順暢，事情的發展比較直接。');
+  }
+  const hv=P.filter(p=>p.c.heavy).map(p=>p.c.name);
+  if(hv.length)out.push(`這次出現了比較沉的牌（${hv.join('、')}）。我不會把它說成好消息，它指出的困難是真的。但沉重的牌通常是在告訴你哪裡需要處理，而不是替你宣判結果。`);
+  const br=P.filter(isBright).map(p=>p.c.name);
+  if(br.length)out.push(`牌面裡也有明亮的訊號（${br.join('、')}），你可以允許自己期待。`);
+  return {lines:out,lastLabel:pk(R,['如果只帶走一件事：','最重要的一步：','先做這件就好：']),last:doOf(k,t),ask:k.c.ask};
+}
+
+// ===== 把牌放在一起看 =====
+const coreOf=p=>p.rev?p.c.coreR:p.c.core;
+const ck=p=>`「${p.c.name}${p.rev?'・逆位':''}」`;
+const REMEDY={'swords>pentacles':'卡住你的是想太多，建議牌要你回到實際行動：與其在腦中反覆推演，不如先做一件具體的事。','swords>cups':'卡住你的是腦袋裡的聲音，建議牌要你回到感受：先問問自己心裡真正想要什麼。','swords>wands':'與其一直想，不如先動起來，行動會幫你想清楚。','cups>swords':'卡在情緒裡的時候，建議牌要你把事情想清楚、說清楚。','cups>pentacles':'情緒需要被實際的行動接住：做一件小事，比反覆難過更有用。','cups>wands':'從低落的情緒裡，找回一點行動的熱情，哪怕只是一小步。','wands>cups':'衝太快卡住了，建議牌要你停下來，感受一下自己和對方的心。','wands>swords':'熱情很好，但需要搭配清楚的計畫和溝通。','wands>pentacles':'把衝勁轉成穩定的累積，慢一點反而走得遠。','pentacles>wands':'現實壓得太緊，建議牌要你找回行動和熱情，別只是守著。','pentacles>cups':'別只顧著現實的安排，也看看心裡的需要。','pentacles>swords':'現實卡住的時候，先把問題想清楚、算清楚，再決定。'};
+function combo(q,a){
+  const R=rng(st.seed+53),P=st.picks,n=P.length,t=effTopic(a),pos=SPREADS[st.spread].pos,out=[];
+  const where=t==='love'?pk(R,['在這段感情裡，','放在你們的關係上，','']):t==='work'?pk(R,['在工作和收入上，','放在你的職涯和收入上，','']):'';
+  const v=P.map(val);
+  if(n===1){
+    const p=P[0];out.push(`${where}這張牌的核心是「${coreOf(p)}」。${p.rev?'逆位代表這股力量現在是卡住的、或是往內收的，需要先被你看見。':'它是現在最值得你放大的力量。'}`);
+    return {paras:out,one:''};
+  }
+  if(st.spread==='ppf'){
+    const [a0,b,c]=P;
+    out.push(pk(R,[`${where}過去的${ck(a0)}留下的是「${coreOf(a0)}」，它把你帶到現在的「${coreOf(b)}」；照這樣走下去，會來到「${coreOf(c)}」。`,`${where}把三張牌連起來看：你從「${coreOf(a0)}」出發，走到現在的「${coreOf(b)}」，前面等著的是「${coreOf(c)}」。`]));
+    const up=v[0]<v[1]&&v[1]<v[2],down=v[0]>v[1]&&v[1]>v[2],valley=v[1]<v[0]&&v[1]<v[2],peak=v[1]>v[0]&&v[1]>v[2];
+    out.push(v[2]<0?(down?'老實說，這條線是往下滑的。如果什麼都不改變，事情可能會比現在更難一些；好消息是，「現在」這張牌就是你可以施力的地方。':`老實說，未來那張${ck(c)}也不輕鬆。但它說的是「照現在的方向走下去」，不是定局：改變現在的做法，未來就會跟著變。`)
+      :up?'整條路是往上的：最難的已經在後面了，接下來會越來越順。':valley?'你現在正站在低點：過去比現在好，但未來會再回升。這段難熬是暫時的，撐過去就會好轉。':peak?'現在是相對好的時候，未來那張牌稍微弱一點。趁狀態好，把基礎打穩，別鬆懈。':v[2]>v[1]?'未來比現在好一些，方向是對的，繼續走下去。':'三張牌的起伏不大，事情會比較平穩地延續。要有改變，得靠你主動做點不一樣的事。');
+    if(a0.rev&&!b.rev)out.push(`過去是逆位、現在轉成正位，代表你已經從${ck(a0)}的卡關裡走出來一些了，這個進步值得被看見。`);
+    else if(!a0.rev&&b.rev)out.push(`過去是正位、現在轉成逆位，代表原本順的東西最近卡住了。回頭想想：是什麼時候開始變的？`);
+    if(b.c.suit&&c.c.suit&&b.c.suit!==c.c.suit)out.push(`從現在到未來，${PAIR[[b.c.suit,c.c.suit].sort().join('|')]}`);
+    else if(b.c.suit&&b.c.suit===c.c.suit)out.push(`現在和未來都是${SUITNAME[b.c.suit]}，代表同一個主題會延續下去，答案就在${SUITM[t==='all'?'all':t][b.c.suit]}裡。`);
+    return {paras:out,one:pk(R,[`一句話：從「${coreOf(a0)}」走到「${coreOf(c)}」，關鍵在現在怎麼面對「${coreOf(b)}」。`,`一句話：放下「${coreOf(a0)}」留下的影子，接住現在的「${coreOf(b)}」，「${coreOf(c)}」才會來。`])};
+  }
+  if(st.spread==='choice'){
+    const [a0,b,c]=P;
+    out.push(pk(R,[`${where}你現在處在「${coreOf(a0)}」的狀態。想往前走的時候，真正卡住你的其實是「${coreOf(b)}」。牌給的解法是「${coreOf(c)}」。`,`${where}三張牌是這樣一條線：現在的「${coreOf(a0)}」→ 被「${coreOf(b)}」卡住 → 用「${coreOf(c)}」來解。`]));
+    if(b.c.i<22)out.push(`卡住你的是一張大牌${ck(b)}，代表這不是換個方法就能解決的小事，而是需要你在心態上做出改變。`);
+    else if(c.c.i<22)out.push(`建議是一張大牌${ck(c)}，代表解法不是小技巧，而是一個更大的轉變，值得認真對待。`);
+    else if(b.c.suit===c.c.suit)out.push(`阻礙和建議都是${SUITNAME[b.c.suit]}：問題出在${SUITM[t==='all'?'all':t][b.c.suit]}，答案也在同一個地方，不用往外找。`);
+    else out.push(`建議牌剛好是阻礙的解藥：${REMEDY[b.c.suit+'>'+c.c.suit]}`);
+    if(c.rev)out.push(`建議牌是逆位，意思是解法不是「做更多」，而是先停下來、調整方向，或先處理「${coreOf(c)}」這件事本身。`);
+    if(a0.c.suit&&a0.c.suit===b.c.suit)out.push(`現況和阻礙是同一個花色，代表讓你困擾的，和你現在身處的狀態是同一件事：問題就在眼前，不在遠方。`);
+    if(isBright(a0)&&val(b)<0)out.push(`其實你的現況不差，${ck(a0)}是張好牌。卡住你的不是處境，而是「${coreOf(b)}」。`);
+    return {paras:out,one:pk(R,[`一句話：別讓「${coreOf(b)}」拖住你，用「${coreOf(c)}」往前一步。`,`一句話：先看見「${coreOf(b)}」，再用「${coreOf(c)}」去解它。`])};
+  }
+  if(st.spread==='love'){
+    const [y,o,r,ch,ad]=P;
+    out.push(pk(R,[`你帶著「${coreOf(y)}」，對方則是「${coreOf(o)}」。兩個人放在一起，關係現在是「${coreOf(r)}」，卡在「${coreOf(ch)}」，牌建議的是「${coreOf(ad)}」。`,`把五張牌連起來：你是「${coreOf(y)}」，對方是「${coreOf(o)}」，你們之間是「${coreOf(r)}」。要面對的是「${coreOf(ch)}」，解法是「${coreOf(ad)}」。`]));
+    const d=val(y)-val(o);
+    out.push(Math.abs(d)<.8?'你們兩個人的狀態差不多，這是好事，代表彼此在同一個高度上，比較容易溝通。':d>0?'你的狀態比對方好一些：你可能比較投入，或比較有餘裕。小心不要一直等對方追上來，也問問他現在需要什麼。':'對方的狀態比你好一些：你可能比較累、比較沒安全感。先照顧好自己，不要用討好去換關係。');
+    if(y.c.suit&&o.c.suit&&y.c.suit!==o.c.suit)out.push(`你們兩個人的牌，${PAIR[[y.c.suit,o.c.suit].sort().join('|')]}`);
+    if(ch.c.suit&&ad.c.suit&&ch.c.suit!==ad.c.suit&&REMEDY[ch.c.suit+'>'+ad.c.suit])out.push(`挑戰和建議放在一起看：${REMEDY[ch.c.suit+'>'+ad.c.suit]}`);
+    return {paras:out,one:pk(R,[`一句話：別只看「${coreOf(ch)}」，「${coreOf(ad)}」才是讓你們往前的方法。`,`一句話：你們之間是「${coreOf(r)}」，想讓它變好，從「${coreOf(ad)}」開始。`])};
+  }
+  return {paras:out,one:''};
+}
+
+function cardIn(p,t,R,used){
+  const x=tx(p);if(t==='all')return '';
+  const pool=SUIT_IN[t][p.c.suit||'major'].filter(s=>!used.has(s));const r=R();
+  const note=pool.length?pool[Math.floor(r*pool.length)]:'';if(note)used.add(note);
+  return note+(t==='love'?x.lv:x.wk);
+}
+
 function showReading(){
   const q=$('q').value.trim(),pos=SPREADS[st.spread].pos,an=analyze(q),tp=st.topic;
   const qe=$('qecho');qe.textContent='';
@@ -922,6 +1169,7 @@ function showReading(){
   const A=answerFor(q,an),ans=$('answer');ans.textContent='';
   const mk=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e};
   ans.append(mk('h3','',A.head));ans.append(mk('p','open',A.open));A.lines.forEach(t=>ans.append(mk('p','lead',t)));
+  const CB=combo(q,an);if(CB.paras.length){const box=mk('div','combo');box.append(mk('h4','',st.picks.length>1?'把牌放在一起看':'這張牌的核心'));CB.paras.forEach(t=>box.append(mk('p','',t)));if(CB.one)box.append(mk('p','one',CB.one));ans.append(box)}
   const fl=mk('dl','flow');A.flow.forEach(([l,c,t])=>{const dd=mk('dd','');dd.append(mk('b','',c+'　'),t);fl.append(mk('dt','',l),dd)});ans.append(fl);
   ans.append(mk('h4','',A.t==='work'?'具體可以這樣做（收入與工作）':A.t==='love'?'具體可以這樣做（感情）':'具體可以這樣做'));
   const ol=mk('ul','steps');A.steps.forEach(([w,t])=>{const li=mk('li','');li.append(mk('span','when',w),mk('span','',t));ol.append(li)});ans.append(ol);
@@ -929,28 +1177,33 @@ function showReading(){
   ans.append(mk('div','close',A.close));
   if(st.topic==='all'&&an.topic)ans.append(mk('p','note',`看起來你問的是${an.topic==='love'?'感情':'工作與金錢'}，上面的步驟已經針對這個面向。`));
   $('aibox').hidden=!aiSample;
-  $('list').innerHTML=st.picks.map((p,k)=>{const c=p.c,t=tx(p);return `<article class="item">
+  const et=effTopic(an),RC=rng(st.seed+37),qs=q?qShort(q):'',used=new Set();
+  $('list').innerHTML=st.picks.map((p,k)=>{const c=p.c,t=tx(p),act=doOf(p,et),inQ=cardIn(p,et,RC,used);
+    const lensPre=qs?pk(RC,[`在「${qs}」這件事裡，`,'放在你問的事情上，','']):'';
+    const showLight=!inQ&&sim(t.l,act)<.55;
+    return `<article class="item">
     <div class="th">${face(c,p.rev)}</div>
     <div><div class="p">${pos[k]}</div><h3>${c.name}<small>${p.rev?'逆位':'正位'}</small></h3>
     <p class="kw">${c.en}・${c.kw}</p>
-    <p class="lens">${LENS[pos[k]]||''}</p>
-    <div class="tt">實話</div><p>${t.t}</p>
-    ${tp!=='work'?`<div class="tt">在感情上</div><p>${t.lv}</p>`:''}
-    ${tp!=='love'?`<div class="tt">在工作與金錢上</div><p>${t.wk}</p>`:''}
-    <div class="tt l">留一盞燈</div><p>${t.l}</p>
-    <div class="tt l">具體可以做</div><p>${doOf(p,effTopic(an))}</p>
+    <p class="lens">${lensPre}${LENS[pos[k]]||''}</p>
+    ${inQ?`<div class="tt l">放在你的問題裡</div><p>${inQ}</p>`:''}
+    ${inQ?`<div class="tt">牌的原意</div><p class="orig">${t.t}</p>`:`<div class="tt">實話</div><p>${t.t}</p>`}
+    ${tp==='all'&&!inQ?`<div class="tt">在感情上</div><p>${t.lv}</p><div class="tt">在工作與金錢上</div><p>${t.wk}</p>`:''}
+    ${showLight?`<div class="tt l">留一盞燈</div><p>${t.l}</p>`:''}
+    <div class="tt l">具體可以做</div><p>${act}</p>
     <div class="ask">問問自己：${c.ask}</div></div></article>`}).join('');
   const s=summary();
-  $('sum').innerHTML=`<h2>整體來看</h2>${s.lines.map(l=>`<p>${l}</p>`).join('')}<p class="last">如果只帶走一件事：${s.last}</p><p class="q2">今晚可以想一想：${s.ask}</p>`;
+  $('sum').innerHTML=`<h2>整體來看</h2>${s.lines.map(l=>`<p>${l}</p>`).join('')}<p class="last">${s.lastLabel}${s.last}</p><p class="q2">今晚可以想一想：${s.ask}</p>`;
   $('reading').classList.add('on');$('copied').textContent='';
   setTimeout(()=>$('reading').scrollIntoView({behavior:'smooth',block:'start'}),300);
 }
 
 function plain(){
-  const q=$('q').value.trim(),pos=SPREADS[st.spread].pos,s=summary(),tp=st.topic;
-  let t=`【誠實的塔羅】${SPREADS[st.spread].label}\n`+(q?`問題：${q}\n`:'')+'\n'+(A=>A.open+'\n\n'+A.lines.join('\n')+'\n\n'+A.flow.map(([l,c,x])=>`${l}（${c}）：${x}`).join('\n')+'\n\n具體可以這樣做：\n'+A.steps.map(([w,s])=>`・${w}：${s}`).join('\n')+'\n\n記得照顧自己：'+A.care+'\n\n最後想對你說：'+A.close)(answerFor(q,analyze(q)))+'\n\n'+(aiText?`【Claude 的細讀】\n${aiText}\n\n`:'');
-  st.picks.forEach((p,k)=>{const x=tx(p);t+=`${pos[k]}｜${p.c.name}（${p.rev?'逆位':'正位'}）\n實話：${x.t}\n`+(tp!=='work'?`感情：${x.lv}\n`:'')+(tp!=='love'?`工作與金錢：${x.wk}\n`:'')+`留一盞燈：${x.l}\n具體可以做：${doOf(p,effTopic(analyze(q)))}\n問問自己：${p.c.ask}\n\n`});
-  return t+'整體來看：\n'+s.lines.join('\n')+`\n如果只帶走一件事：${s.last}`;
+  const q=$('q').value.trim(),an=analyze(q),et=effTopic(an),pos=SPREADS[st.spread].pos,s=summary(),A=answerFor(q,an),RC=rng(st.seed+37),qs=q?qShort(q):'',used=new Set();
+  let t=`【誠實的塔羅】${SPREADS[st.spread].label}\n`+(q?`問題：${q}\n`:'')+'\n'+A.open+'\n\n'+A.lines.join('\n')+'\n\n'+(CB=>CB.paras.length?'把牌放在一起看：\n'+CB.paras.join('\n')+(CB.one?'\n'+CB.one:'')+'\n\n':'')(combo(q,an))+A.flow.map(([l,c,x])=>`${l}（${c}）：${x}`).join('\n')+'\n\n具體可以這樣做：\n'+A.steps.map(([w,x])=>`・${w}：${x}`).join('\n')+'\n\n記得照顧自己：'+A.care+'\n\n最後想對你說：'+A.close+'\n\n'+(aiText?`【Claude 的細讀】\n${aiText}\n\n`:'');
+  st.picks.forEach((p,k)=>{const x=tx(p),act=doOf(p,et),inQ=cardIn(p,et,RC,used);if(qs)pk(RC,[0,0,0]);
+    t+=`${pos[k]}｜${p.c.name}（${p.rev?'逆位':'正位'}）\n`+(inQ?`放在你的問題裡：${inQ}\n`:'')+(inQ?`牌的原意：${x.t}\n`:`實話：${x.t}\n`)+(!inQ&&sim(x.l,act)<.55?`留一盞燈：${x.l}\n`:'')+`具體可以做：${act}\n問問自己：${p.c.ask}\n\n`});
+  return t+'整體來看：\n'+s.lines.join('\n')+`\n${s.lastLabel}${s.last}`;
 }
 
 // ---- Claude 細讀 ----
